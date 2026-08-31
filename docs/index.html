@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RCA Generator</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<section id="login-screen" class="screen active">
+  <div class="login-card">
+    <h1>RCA Generator</h1>
+    <p>Enter the team password to continue.</p>
+    <input type="password" id="password-input" placeholder="Password" autocomplete="current-password" />
+    <button id="login-btn">Log in</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</section>
+
+<div id="app-screen">
+  <header class="topbar">
+    <h1>RCA Generator</h1>
+    <button id="logout-btn">Log out</button>
+  </header>
+
+  <main class="screen active">
+    <div class="card">
+      <h2>1. Upload Jira XML</h2>
+      <p class="hint">Upload one XML export — a single ticket or a bulk pull of many. You can upload more than one file at once.</p>
+      <div class="dropzone" id="dropzone">
+        Drop XML file(s) here, or click to choose
+        <input type="file" id="file-input" accept=".xml" multiple style="display:none" />
+      </div>
+    </div>
+
+    <div class="card" id="tickets-card" style="display:none">
+      <h2>2. Choose which tickets to generate</h2>
+      <p class="hint">Uncheck any tickets you don't want a deck for. Paste ticket keys below (comma or space separated) to bulk-skip ones you've already generated before.</p>
+      <textarea id="skip-keys" placeholder="e.g. CBLO-410, CBLO-408, CBLO-404 ..."></textarea>
+      <div class="row-actions" style="margin-top:12px">
+        <button class="secondary" id="select-all-btn">Select all</button>
+        <button class="secondary" id="select-none-btn">Select none</button>
+      </div>
+      <table id="ticket-table">
+        <thead>
+          <tr><th></th><th>Key</th><th>Summary</th><th>Status</th><th>Type</th></tr>
+        </thead>
+        <tbody id="ticket-table-body"></tbody>
+      </table>
+    </div>
+
+    <div class="card" id="generate-card" style="display:none">
+      <h2>3. Generate</h2>
+      <p class="hint">Each ticket is sent to Claude to draft the RCA text, then a .pptx is built in your browser from the EC-61 template. This can take a little while for large batches.</p>
+      <div class="row-actions">
+        <button id="generate-btn">Generate RCA decks</button>
+        <span id="generate-summary" style="font-size:13px;color:#666"></span>
+      </div>
+      <div id="progress-list"></div>
+    </div>
+  </main>
+
+  <footer class="note">
+    Diagrams and narrative text are AI-drafted from ticket text — review before sharing externally.
+  </footer>
+</div>
+
+<script src="vendor/jszip.min.js"></script>
+<script src="vendor/pptxgen.bundle.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

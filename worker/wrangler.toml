@@ -1,0 +1,12 @@
+name = "rca-generator-worker"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Non-secret config. Secrets (ANTHROPIC_API_KEY, APP_PASSWORD) are set with:
+#   wrangler secret put ANTHROPIC_API_KEY
+#   wrangler secret put APP_PASSWORD
+[vars]
+CLAUDE_MODEL = "claude-sonnet-5"
+# Once your GitHub Pages site is live, lock this down, e.g.:
+# ALLOWED_ORIGIN = "https://yourorg.github.io"
+ALLOWED_ORIGIN = "*"

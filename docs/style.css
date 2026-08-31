@@ -1,0 +1,178 @@
+:root {
+  --navy: #0A2972;
+  --navy-dark: #071b4d;
+  --grey-bg: #f4f6fb;
+  --border: #d9d9d9;
+  --green: #9BBB59;
+  --red: #FF0000;
+  --orange: #FFC000;
+  --yellow: #FFFF00;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+  background: var(--grey-bg);
+  color: #1a1a1a;
+}
+
+header.topbar {
+  background: var(--navy);
+  color: #fff;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header.topbar h1 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 600;
+}
+
+header.topbar button {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.5);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.screen { display: none; padding: 24px; max-width: 1100px; margin: 0 auto; }
+.screen.active { display: block; }
+
+#login-screen {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+#login-screen.active { display: flex; }
+
+.login-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 32px;
+  width: 340px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+.login-card h1 { font-size: 20px; margin: 0 0 4px; color: var(--navy); }
+.login-card p { font-size: 13px; color: #666; margin: 0 0 20px; }
+.login-card input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.login-card button {
+  width: 100%;
+  padding: 10px;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.login-card button:disabled { opacity: 0.5; cursor: default; }
+.login-error { color: #c0392b; font-size: 13px; margin-top: 8px; min-height: 18px; }
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+.card h2 { font-size: 15px; margin: 0 0 12px; color: var(--navy); }
+.card p.hint { font-size: 13px; color: #666; margin: -4px 0 14px; }
+
+.dropzone {
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+}
+.dropzone.drag { border-color: var(--navy); background: #eef1fb; }
+
+textarea#skip-keys {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+table#ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+table#ticket-table th, table#ticket-table td {
+  border-bottom: 1px solid var(--border);
+  padding: 8px 6px;
+  text-align: left;
+  vertical-align: top;
+}
+table#ticket-table th { color: #666; font-weight: 600; font-size: 12px; }
+table#ticket-table tr.skipped { opacity: 0.4; }
+.status-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.status-Closed { background: #e6f4ea; color: #1e7e34; }
+.status-Monitoring { background: #fff4e0; color: #9a6700; }
+
+.row-actions { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; }
+.row-actions button {
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.row-actions button.secondary {
+  background: #fff;
+  color: var(--navy);
+  border: 1px solid var(--navy);
+}
+.row-actions button:disabled { opacity: 0.5; cursor: default; }
+
+#progress-list { font-size: 13px; }
+#progress-list .item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.pstate { font-size: 12px; font-weight: 600; }
+.pstate-pending { color: #999; }
+.pstate-working { color: #b8860b; }
+.pstate-done { color: #1e7e34; }
+.pstate-error { color: #c0392b; }
+
+footer.note {
+  font-size: 12px;
+  color: #888;
+  text-align: center;
+  padding: 20px;
+}
