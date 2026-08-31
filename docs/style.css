@@ -47,7 +47,6 @@ header.topbar button {
 .screen.active { display: block; }
 
 #login-screen {
-  display: flex;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
