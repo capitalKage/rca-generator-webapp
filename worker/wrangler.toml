@@ -7,6 +7,4 @@ compatibility_date = "2024-11-01"
 #   wrangler secret put APP_PASSWORD
 [vars]
 CLAUDE_MODEL = "claude-sonnet-5"
-# Once your GitHub Pages site is live, lock this down, e.g.:
-# ALLOWED_ORIGIN = "https://yourorg.github.io"
-ALLOWED_ORIGIN = "*"
+ALLOWED_ORIGIN = "https://capitalkage.github.io"
