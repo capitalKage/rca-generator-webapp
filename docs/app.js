@@ -485,7 +485,7 @@ async function runGenerate() {
   progressList.innerHTML = "";
   selected.forEach((t) => setProgress(t.key, "pending", "queued"));
 
-  const built = []; // { key, blob }
+  const built = []; // { key, blob, builtAt }
 
   for (const ticket of selected) {
     setProgress(ticket.key, "working", "drafting with AI…");
@@ -494,7 +494,7 @@ async function runGenerate() {
       setProgress(ticket.key, "working", "building slides…");
       const pptx = await buildDeck(window.PptxGenJS, ticket, ai);
       const blob = await pptx.write({ outputType: "blob" });
-      built.push({ key: ticket.key, blob });
+      built.push({ key: ticket.key, blob, builtAt: new Date() });
       setProgress(ticket.key, "done", "done");
     } catch (e) {
       console.error(e);
@@ -509,7 +509,10 @@ async function runGenerate() {
     downloadBlob(built[0].blob, `${built[0].key}_RCA.pptx`);
   } else {
     const zip = new JSZip();
-    for (const b of built) zip.file(`${b.key}_RCA.pptx`, b.blob);
+    // Stamp each entry with when that ticket actually finished building,
+    // not the moment this packing loop ran (which is ~instant for all
+    // entries and would otherwise give every file an identical timestamp).
+    for (const b of built) zip.file(`${b.key}_RCA.pptx`, b.blob, { date: b.builtAt });
     const zipBlob = await zip.generateAsync({ type: "blob" });
     downloadBlob(zipBlob, `RCA_Decks_${new Date().toISOString().slice(0, 10)}.zip`);
   }
