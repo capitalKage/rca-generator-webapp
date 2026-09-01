@@ -332,7 +332,7 @@ function buildMainTable(slide, t) {
     ],
     // Row 2
     [
-      cell(t.root_cause, { colspan: 4, rowspan: 4, valign: "top", align: "left" }),
+      cell(t.root_cause, { colspan: 4, rowspan: 4, valign: "middle", align: "left" }),
       cell("Investigation", { fill: { color: LABEL_FILL }, bold: true, fontSize: 10, align: "center" }),
       cell("Root Cause", { colspan: 2, fill: { color: LABEL_FILL }, bold: true, fontSize: 10, align: "center" }),
       cell("Implementation", { colspan: 2, fill: { color: LABEL_FILL }, bold: true, fontSize: 10, align: "center" }),
@@ -364,7 +364,7 @@ function buildMainTable(slide, t) {
     ],
     // Row 7
     [
-      cell(t.interim, { colspan: 4, rowspan: 3, valign: "top", align: "left" }),
+      cell(t.interim, { colspan: 4, rowspan: 3, valign: "middle", align: "left" }),
       cell(t.permanent, { colspan: 8, align: "left" }),
     ],
     // Row 8
@@ -377,7 +377,12 @@ function buildMainTable(slide, t) {
     [cell(t.monitoring, { colspan: 8, align: "left" })],
   ];
 
-  slide.addTable(rows, { x: TABLE_X, y: 0.75, w: TABLE_W, colW, autoPage: false });
+  // Explicit minimum row heights so the table fills most of the slide's
+  // vertical space (0.75 to ~6.9, leaving room above the footer at 7.14)
+  // instead of shrinking to fit its (often short) AI-drafted text.
+  const rowH = [0.85, 0.42, 0.42, 0.42, 0.42, 0.85, 0.48, 0.95, 0.48, 0.85];
+
+  slide.addTable(rows, { x: TABLE_X, y: 0.75, w: TABLE_W, colW, rowH, autoPage: false });
 }
 
 async function buildDeck(pptxgen, ticket, ai) {
