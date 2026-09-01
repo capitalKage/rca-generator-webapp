@@ -296,11 +296,15 @@ function addHeader(slide, headerText) {
 }
 
 function cell(text, opts) {
-  return { text: text == null ? "" : String(text), options: Object.assign({ fontSize: 10, fontFace: "Arial", valign: "middle", border: BORDER, color: "202020" }, opts) };
+  return { text: text == null ? "" : String(text), options: Object.assign({ fontSize: 12, fontFace: "Arial", valign: "middle", border: BORDER, color: "202020" }, opts) };
 }
 
+// Table area is centered on the 13.333in-wide slide, using most of its width.
+const TABLE_X = 0.443;
+const TABLE_W = 12.448;
+
 function buildMainTable(slide, t) {
-  const colW = [2.375, 1.485, 0.605, 0.502, 1.129, 0.669, 0.502, 1.004, 0.229, 0.273, 0.229, 0.957];
+  const colW = [2.969, 1.856, 0.756, 0.628, 1.411, 0.836, 0.628, 1.255, 0.286, 0.341, 0.286, 1.196];
 
   const rcY = t.rc_clear === "Y" ? "Y" : t.rc_clear === "N" ? "" : "N/A";
   const rcN = t.rc_clear === "N" ? "N" : "";
@@ -320,7 +324,7 @@ function buildMainTable(slide, t) {
     // Row 1
     [
       cell("Root Cause", { fill: { color: LABEL_FILL }, bold: true }),
-      cell("Is Root Cause Clear?", { fill: { color: LABEL_FILL }, bold: true, fontSize: 9 }),
+      cell("Is Root Cause Clear?", { fill: { color: LABEL_FILL }, bold: true, fontSize: 10 }),
       cell(rcY, { fill: { color: rcFillY }, align: "center", bold: true }),
       cell(rcN, { fill: { color: rcFillN }, align: "center", bold: true }),
       cell("Owner", { fill: { color: LABEL_FILL }, bold: true }),
@@ -329,10 +333,10 @@ function buildMainTable(slide, t) {
     // Row 2
     [
       cell(t.root_cause, { colspan: 4, rowspan: 4, valign: "top", align: "left" }),
-      cell("Investigation", { fill: { color: LABEL_FILL }, bold: true, fontSize: 9, align: "center" }),
-      cell("Root Cause", { colspan: 2, fill: { color: LABEL_FILL }, bold: true, fontSize: 9, align: "center" }),
-      cell("Implementation", { colspan: 2, fill: { color: LABEL_FILL }, bold: true, fontSize: 9, align: "center" }),
-      cell("Verification", { colspan: 3, fill: { color: LABEL_FILL }, bold: true, fontSize: 9, align: "center" }),
+      cell("Investigation", { fill: { color: LABEL_FILL }, bold: true, fontSize: 10, align: "center" }),
+      cell("Root Cause", { colspan: 2, fill: { color: LABEL_FILL }, bold: true, fontSize: 10, align: "center" }),
+      cell("Implementation", { colspan: 2, fill: { color: LABEL_FILL }, bold: true, fontSize: 10, align: "center" }),
+      cell("Verification", { colspan: 3, fill: { color: LABEL_FILL }, bold: true, fontSize: 10, align: "center" }),
     ],
     // Row 3 (phase bar)
     [
@@ -343,19 +347,19 @@ function buildMainTable(slide, t) {
     ],
     // Row 4
     [
-      cell(`Customer Impact : ${t.impact}`, { colspan: 3, fill: { color: LABEL_FILL }, bold: true, fontSize: 9 }),
-      cell("# of impacted customers", { colspan: 4, fill: { color: LABEL_FILL }, bold: true, fontSize: 9 }),
-      cell(t.impacted, { fontSize: 9, align: "center" }),
+      cell(`Customer Impact : ${t.impact}`, { colspan: 3, fill: { color: LABEL_FILL }, bold: true, fontSize: 10 }),
+      cell("# of impacted customers", { colspan: 4, fill: { color: LABEL_FILL }, bold: true, fontSize: 10 }),
+      cell(t.impacted, { fontSize: 10, align: "center" }),
     ],
     // Row 5
     [cell(t.impact_detail, { colspan: 8, align: "left" })],
     // Row 6
     [
-      cell("Interim Corrective Action", { fill: { color: LABEL_FILL }, bold: true, fontSize: 9 }),
-      cell("Implementation date", { fill: { color: LABEL_FILL }, bold: true, fontSize: 8 }),
+      cell("Interim Corrective Action", { fill: { color: LABEL_FILL }, bold: true, fontSize: 10 }),
+      cell("Implementation date", { fill: { color: LABEL_FILL }, bold: true, fontSize: 9 }),
       cell(t.interim_date, { colspan: 2, align: "center" }),
-      cell("Permanent Corrective Action", { colspan: 2, fill: { color: LABEL_FILL }, bold: true, fontSize: 9 }),
-      cell("Implementation date:", { colspan: 2, fill: { color: LABEL_FILL }, bold: true, fontSize: 8 }),
+      cell("Permanent Corrective Action", { colspan: 2, fill: { color: LABEL_FILL }, bold: true, fontSize: 10 }),
+      cell("Implementation date:", { colspan: 2, fill: { color: LABEL_FILL }, bold: true, fontSize: 9 }),
       cell(t.permanent_date, { colspan: 4, align: "center" }),
     ],
     // Row 7
@@ -365,15 +369,15 @@ function buildMainTable(slide, t) {
     ],
     // Row 8
     [
-      cell("Monitoring", { colspan: 3, fill: { color: LABEL_FILL }, bold: true, fontSize: 9 }),
-      cell("Implementation date:", { colspan: 3, fill: { color: LABEL_FILL }, bold: true, fontSize: 8 }),
+      cell("Monitoring", { colspan: 3, fill: { color: LABEL_FILL }, bold: true, fontSize: 10 }),
+      cell("Implementation date:", { colspan: 3, fill: { color: LABEL_FILL }, bold: true, fontSize: 9 }),
       cell(t.monitoring_date, { colspan: 2, align: "center" }),
     ],
     // Row 9
     [cell(t.monitoring, { colspan: 8, align: "left" })],
   ];
 
-  slide.addTable(rows, { x: 0.03, y: 0.75, w: 9.96, colW, autoPage: false });
+  slide.addTable(rows, { x: TABLE_X, y: 0.75, w: TABLE_W, colW, autoPage: false });
 }
 
 async function buildDeck(pptxgen, ticket, ai) {
@@ -406,18 +410,18 @@ async function buildDeck(pptxgen, ticket, ai) {
       [cell("Incident Description", { fill: { color: LABEL_FILL }, bold: true }), cell(ai.short_incident, { align: "left" })],
       [cell("Incident Diagram", { fill: { color: LABEL_FILL }, bold: true }), cell("Shown Below", { align: "left" })],
     ],
-    { x: 0, y: 0.75, w: 9.96, colW: [2.375, 7.583], border: BORDER, fontSize: 10, fontFace: "Arial" }
+    { x: TABLE_X, y: 0.75, w: TABLE_W, colW: [2.969, 9.479], border: BORDER, fontSize: 12, fontFace: "Arial" }
   );
   s3.addText(`Failure/response flow for ${ticket.key} (based on ticket description)`, {
-    x: 0.49, y: 1.9, w: 8.83, h: 0.4, italic: true, fontSize: 13, fontFace: "Arial", color: "333333",
+    x: TABLE_X, y: 1.9, w: TABLE_W, h: 0.4, italic: true, fontSize: 13, fontFace: "Arial", color: "333333",
   });
 
   const steps = (ai.diagram && ai.diagram.length === 4) ? ai.diagram : ["", "", "", ""];
-  const gap = 0.25;
-  const totalW = 8.83;
+  const gap = 0.3;
+  const totalW = TABLE_W;
   const boxW = (totalW - gap * 3) / 4;
-  const boxH = 1.4;
-  const startX = 0.49;
+  const boxH = 1.6;
+  const startX = TABLE_X;
   const y = 2.45;
   for (let i = 0; i < 4; i++) {
     const x = startX + i * (boxW + gap);
